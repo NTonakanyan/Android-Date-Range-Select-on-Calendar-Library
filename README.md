@@ -26,6 +26,6 @@ allprojects {
 }
 	
 dependencies {
-	implementation 'com.github.NTonakanyan:Android-Exception-library:Tag'
+	implementation 'com.github.NTonakanyan:Android-Date-Range-Select-on-Calendar-Library:Tag'
 }
 ```
