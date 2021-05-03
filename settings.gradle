@@ -1,2 +1,3 @@
+include ':CalendarLibrary'
 include ':app'
 rootProject.name = "Calendar Application"
