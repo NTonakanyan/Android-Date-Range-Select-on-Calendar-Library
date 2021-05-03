@@ -15,3 +15,17 @@ How to implement dependecy
 ![Alt text](static/screen_1.jpg "Optional Title")
 
 ![Alt text](static/screen_2.jpg "Optional Title")
+
+####  For implementation
+
+```gradle
+allprojects {
+    repositories {
+	maven { url 'https://jitpack.io' }
+    }
+}
+	
+dependencies {
+	implementation 'com.github.NTonakanyan:Android-Exception-library:Tag'
+}
+```
