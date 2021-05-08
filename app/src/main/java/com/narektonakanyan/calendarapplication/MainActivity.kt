@@ -3,6 +3,7 @@ package com.narektonakanyan.calendarapplication
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.narektonakanyan.calendarapplication.databinding.ActivityMainBinding
+import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,10 @@ class MainActivity : AppCompatActivity() {
         _binding.apply {
             val start = Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR) - 1) }.apply { timeInMillis += 20 * 86400000 }
             val end = Calendar.getInstance()
-            calendarView.setupData(start, end)
+            calendarView.setupData(SetupCalendarBuilder.Builder(start, end)
+                .selectedStart(Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR) - 1) }.apply { timeInMillis += 20 * 86400000 })
+                .selectedEnd(end)
+                .build())
         }
     }
 }

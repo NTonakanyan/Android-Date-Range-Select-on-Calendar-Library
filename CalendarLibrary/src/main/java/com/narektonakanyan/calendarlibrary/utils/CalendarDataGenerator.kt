@@ -17,12 +17,24 @@ internal fun getGeneratedData(start: Calendar, end: Calendar): List<CalendarMode
     while (currentMillis <= endMillis) {
         val c = Calendar.getInstance().apply { timeInMillis = currentMillis }
         list.add(CalendarModel(CalendarType.DAY, c))
-        currentMillis += 86400000
+        currentMillis += 86400000L
         if (c.get(Calendar.DAY_OF_MONTH) == c.getActualMaximum(Calendar.DAY_OF_MONTH))
-            addMouthNameAndWeekDaysOfName(Calendar.getInstance().apply { timeInMillis = currentMillis + 86400000 })
+            addMouthNameAndWeekDaysOfName(Calendar.getInstance().apply { timeInMillis = currentMillis + 86400000L })
     }
     initListBeforeSelectedDateToMouthEndDay(end)
     return list
+}
+
+internal fun initListAfterSelectedDateToMouthStartDay(c: Calendar) {
+    val count = c.get(Calendar.DAY_OF_MONTH)
+    var currentMillis = c.timeInMillis.minus(count.times(86400000L))
+    while (Calendar.getInstance().apply { timeInMillis = currentMillis }.get(Calendar.DAY_OF_WEEK) != 1) {
+        currentMillis -= 86400000L
+    }
+    for (i in 0 until count) {
+        list.add(CalendarModel(CalendarType.DAY, Calendar.getInstance().apply { timeInMillis = currentMillis }, false))
+        currentMillis += 86400000L
+    }
 }
 
 internal fun initListBeforeSelectedDateToMouthEndDay(c: Calendar) {
@@ -32,20 +44,8 @@ internal fun initListBeforeSelectedDateToMouthEndDay(c: Calendar) {
     val mouthLastDay = c.timeInMillis + addedDayCountMillis
     var currentMillis = c.timeInMillis
     while (currentMillis < mouthLastDay) {
-        currentMillis += 86400000
+        currentMillis += 86400000L
         list.add(CalendarModel(CalendarType.DAY, Calendar.getInstance().apply { timeInMillis = currentMillis }, false))
-    }
-}
-
-internal fun initListAfterSelectedDateToMouthStartDay(c: Calendar) {
-    val count = c.get(Calendar.DAY_OF_MONTH)
-    var currentMillis = c.timeInMillis.minus(count.times(86400000))
-    while (Calendar.getInstance().apply { timeInMillis = currentMillis }.get(Calendar.DAY_OF_WEEK) != 1) {
-        currentMillis -= 86400000
-    }
-    for (i in 0 until count) {
-        list.add(CalendarModel(CalendarType.DAY, Calendar.getInstance().apply { timeInMillis = currentMillis }, false))
-        currentMillis += 86400000
     }
 }
 
@@ -55,11 +55,11 @@ internal fun addMouthNameAndWeekDaysOfName(c: Calendar) {
 }
 
 internal fun getWeekDaysName(): List<Calendar> {
-    var currentMillis = 4 * 86400000L
+    var currentMillis = 3 * 86400000L
     val list = mutableListOf<Calendar>()
     for (i in 0..6) {
         list.add(Calendar.getInstance().apply { timeInMillis = currentMillis })
-        currentMillis += 86400000
+        currentMillis += 86400000L
     }
     return list
 }
@@ -105,4 +105,26 @@ internal fun selectItem(model: CalendarModel, callback: (Int, Int) -> Unit) {
             selectSingle()
         }
     }
+}
+
+internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar) {
+    val firstSelectedIndex = list.indexOfFirst { it.date.get(Calendar.DAY_OF_YEAR) == selectedStart.get(Calendar.DAY_OF_YEAR)  &&
+            it.date.get(Calendar.YEAR) == selectedStart.get(Calendar.YEAR) }
+    val lastSelectedIndex =  list.indexOfLast { it.date.get(Calendar.DAY_OF_YEAR) == selectedEnd.get(Calendar.DAY_OF_YEAR)  &&
+            it.date.get(Calendar.YEAR) == selectedEnd.get(Calendar.YEAR) }
+    if (firstSelectedIndex != -1 && lastSelectedIndex != -1)
+        for (i in firstSelectedIndex..lastSelectedIndex) {
+            if (list[i].isSelectable)
+                when (i) {
+                    firstSelectedIndex -> list[i].selectedDayType = SelectedDayType.START
+                    lastSelectedIndex -> list[i].selectedDayType = SelectedDayType.END
+                    else -> list[i].selectedDayType = SelectedDayType.MIDDLE
+                }
+        }
+}
+
+internal fun selectSingle(calendar: Calendar) {
+    val index = list.indexOfFirst { it.date == calendar }
+    if (index != -1 && list[index].isSelectable)
+        list[index].selectedDayType = SelectedDayType.SINGLE
 }

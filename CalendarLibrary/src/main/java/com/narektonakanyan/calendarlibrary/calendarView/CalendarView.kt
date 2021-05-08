@@ -9,8 +9,10 @@ import com.narektonakanyan.calendarlibrary.adapters.CalendarAdapter
 import com.narektonakanyan.calendarlibrary.databinding.LayoutCalendarBinding
 import com.narektonakanyan.calendarlibrary.enums.CalendarType
 import com.narektonakanyan.calendarlibrary.models.CalendarModel
+import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
 import com.narektonakanyan.calendarlibrary.utils.getGeneratedData
-import java.util.*
+import com.narektonakanyan.calendarlibrary.utils.selectRange
+import com.narektonakanyan.calendarlibrary.utils.selectSingle
 
 class CalendarView : FrameLayout {
 
@@ -54,8 +56,13 @@ class CalendarView : FrameLayout {
         _adapter.submitList(list)
     }
 
-    fun setupData(start:Calendar,end:Calendar){
-        val list = getGeneratedData(start, end)
+    fun setupData(builder: SetupCalendarBuilder) {
+        val list = getGeneratedData(builder.start, builder.end)
+        when {
+            builder.selectedStart != null && builder.selectedEnd != null -> selectRange(builder.selectedStart, builder.selectedEnd)
+            builder.selectedStart != null -> selectSingle(builder.selectedStart)
+            builder.selectedEnd != null -> selectSingle(builder.selectedEnd)
+        }
         submitList(list)
     }
 }
