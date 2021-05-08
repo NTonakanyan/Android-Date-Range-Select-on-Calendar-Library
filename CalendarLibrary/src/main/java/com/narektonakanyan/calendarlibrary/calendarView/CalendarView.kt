@@ -14,7 +14,6 @@ import com.narektonakanyan.calendarlibrary.utils.getGeneratedData
 import com.narektonakanyan.calendarlibrary.utils.getSelectedDays
 import com.narektonakanyan.calendarlibrary.utils.selectRange
 import com.narektonakanyan.calendarlibrary.utils.selectSingle
-import java.util.*
 
 class CalendarView : FrameLayout {
 
@@ -46,7 +45,6 @@ class CalendarView : FrameLayout {
                     }
                 }
             }
-
             recyclerView.adapter = _adapter
             recyclerView.layoutManager = gridLayoutManager
         }
@@ -66,6 +64,7 @@ class CalendarView : FrameLayout {
             builder.selectedEnd != null -> selectSingle(builder.selectedEnd)
         }
         submitList(list)
+        _binding.recyclerView.layoutManager?.scrollToPosition(list.size.minus(1))
     }
 
     fun getSelectedDate() = getSelectedDays()
