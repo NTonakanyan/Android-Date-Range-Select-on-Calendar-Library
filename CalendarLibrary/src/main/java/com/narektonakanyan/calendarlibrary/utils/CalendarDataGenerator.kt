@@ -108,10 +108,14 @@ internal fun selectItem(model: CalendarModel, callback: (Int, Int) -> Unit) {
 }
 
 internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar) {
-    val firstSelectedIndex = list.indexOfFirst { it.date.get(Calendar.DAY_OF_YEAR) == selectedStart.get(Calendar.DAY_OF_YEAR)  &&
-            it.date.get(Calendar.YEAR) == selectedStart.get(Calendar.YEAR) }
-    val lastSelectedIndex =  list.indexOfLast { it.date.get(Calendar.DAY_OF_YEAR) == selectedEnd.get(Calendar.DAY_OF_YEAR)  &&
-            it.date.get(Calendar.YEAR) == selectedEnd.get(Calendar.YEAR) }
+    val firstSelectedIndex = list.indexOfFirst {
+        it.date.get(Calendar.DAY_OF_YEAR) == selectedStart.get(Calendar.DAY_OF_YEAR) &&
+                it.date.get(Calendar.YEAR) == selectedStart.get(Calendar.YEAR)
+    }
+    val lastSelectedIndex = list.indexOfLast {
+        it.date.get(Calendar.DAY_OF_YEAR) == selectedEnd.get(Calendar.DAY_OF_YEAR) &&
+                it.date.get(Calendar.YEAR) == selectedEnd.get(Calendar.YEAR)
+    }
     if (firstSelectedIndex != -1 && lastSelectedIndex != -1)
         for (i in firstSelectedIndex..lastSelectedIndex) {
             if (list[i].isSelectable)
@@ -127,4 +131,8 @@ internal fun selectSingle(calendar: Calendar) {
     val index = list.indexOfFirst { it.date == calendar }
     if (index != -1 && list[index].isSelectable)
         list[index].selectedDayType = SelectedDayType.SINGLE
+}
+
+internal fun getSelectedDays(): List<Calendar> {
+    return list.filter { it.selectedDayType != null }.map { it.date }
 }

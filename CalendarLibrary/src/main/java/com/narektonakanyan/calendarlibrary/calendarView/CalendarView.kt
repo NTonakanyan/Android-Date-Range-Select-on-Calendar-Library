@@ -11,8 +11,10 @@ import com.narektonakanyan.calendarlibrary.enums.CalendarType
 import com.narektonakanyan.calendarlibrary.models.CalendarModel
 import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
 import com.narektonakanyan.calendarlibrary.utils.getGeneratedData
+import com.narektonakanyan.calendarlibrary.utils.getSelectedDays
 import com.narektonakanyan.calendarlibrary.utils.selectRange
 import com.narektonakanyan.calendarlibrary.utils.selectSingle
+import java.util.*
 
 class CalendarView : FrameLayout {
 
@@ -65,4 +67,6 @@ class CalendarView : FrameLayout {
         }
         submitList(list)
     }
+
+    fun getSelectedDate() = getSelectedDays()
 }

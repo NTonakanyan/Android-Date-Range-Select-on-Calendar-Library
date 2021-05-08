@@ -8,7 +8,6 @@ import java.util.*
 internal data class CalendarModel(val type: CalendarType,
     val date: Calendar,
     val isSelectable: Boolean = true,
-//    var isSelected: Boolean = false,
     var selectedDayType: SelectedDayType? = null) : DifItem<CalendarModel> {
 
     override fun areItemsTheSame(second: CalendarModel): Boolean {
