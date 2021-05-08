@@ -1,5 +1,7 @@
 # Date-Range-Select-on-Calendar-Android
 
+[![](https://jitpack.io/v/NTonakanyan/Android-Date-Range-Select-on-Calendar-Library.svg)](https://jitpack.io/#NTonakanyan/Android-Date-Range-Select-on-Calendar-Library)
+
 How to implement dependecy
 
 1. add your xml 
