@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView() {
         _binding.apply {
-            val start = Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR) - 1) }.apply { timeInMillis += 20 * 86400000 }
+            val start = Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR) - 1) }.apply { timeInMillis += 20 * 86400000L }
             val end = Calendar.getInstance()
             calendarView.setupData(SetupCalendarBuilder.Builder(start, end)
-                .selectedStart(Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR) - 1) }.apply { timeInMillis += 20 * 86400000 })
-                .selectedEnd(end)
+                .selectedStart(Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR)) }.apply { timeInMillis -= 20 * 86400000L })
+                .selectedEnd(Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR)) }.apply { timeInMillis -= 5 * 86400000L })
                 .build())
         }
     }

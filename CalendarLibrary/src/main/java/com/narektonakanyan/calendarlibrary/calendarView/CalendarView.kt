@@ -58,13 +58,14 @@ class CalendarView : FrameLayout {
 
     fun setupData(builder: SetupCalendarBuilder) {
         val list = getGeneratedData(builder.start, builder.end)
-        when {
+        val index = when {
             builder.selectedStart != null && builder.selectedEnd != null -> selectRange(builder.selectedStart, builder.selectedEnd)
             builder.selectedStart != null -> selectSingle(builder.selectedStart)
             builder.selectedEnd != null -> selectSingle(builder.selectedEnd)
+            else -> null
         }
         submitList(list)
-        _binding.recyclerView.layoutManager?.scrollToPosition(list.size.minus(1))
+        _binding.recyclerView.layoutManager?.scrollToPosition(index ?: list.size.minus(1))
     }
 
     fun getSelectedDate() = getSelectedDays()

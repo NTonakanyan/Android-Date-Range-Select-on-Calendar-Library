@@ -9,6 +9,7 @@ internal val list = mutableListOf<CalendarModel>()
 internal val weekDaysOfName by lazy { getWeekDaysName().map { CalendarModel(CalendarType.DAY_OF_WEEK_NAME, it) } }
 
 internal fun getGeneratedData(start: Calendar, end: Calendar): List<CalendarModel> {
+    list.clear()
     var currentMillis: Long = start.timeInMillis
     val endMillis: Long = end.timeInMillis
 
@@ -107,7 +108,7 @@ internal fun selectItem(model: CalendarModel, callback: (Int, Int) -> Unit) {
     }
 }
 
-internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar) {
+internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar): Int? {
     val firstSelectedIndex = list.indexOfFirst {
         it.date.get(Calendar.DAY_OF_YEAR) == selectedStart.get(Calendar.DAY_OF_YEAR) &&
                 it.date.get(Calendar.YEAR) == selectedStart.get(Calendar.YEAR)
@@ -125,12 +126,14 @@ internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar) {
                     else -> list[i].selectedDayType = SelectedDayType.MIDDLE
                 }
         }
+    return if (firstSelectedIndex == -1) null else firstSelectedIndex
 }
 
-internal fun selectSingle(calendar: Calendar) {
+internal fun selectSingle(calendar: Calendar): Int? {
     val index = list.indexOfFirst { it.date == calendar }
     if (index != -1 && list[index].isSelectable)
         list[index].selectedDayType = SelectedDayType.SINGLE
+    return if (index == -1) null else index
 }
 
 internal fun getSelectedDays(): List<Calendar> {
