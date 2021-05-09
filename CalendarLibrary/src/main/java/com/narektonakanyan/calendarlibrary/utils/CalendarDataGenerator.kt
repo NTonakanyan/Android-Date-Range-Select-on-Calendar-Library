@@ -130,7 +130,10 @@ internal fun selectRange(selectedStart: Calendar, selectedEnd: Calendar): Int? {
 }
 
 internal fun selectSingle(calendar: Calendar): Int? {
-    val index = list.indexOfFirst { it.date == calendar }
+    val index = list.indexOfFirst {
+        it.date.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR) &&
+                it.date.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+    }
     if (index != -1 && list[index].isSelectable)
         list[index].selectedDayType = SelectedDayType.SINGLE
     return if (index == -1) null else index

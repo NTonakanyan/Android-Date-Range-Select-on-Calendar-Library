@@ -1,6 +1,7 @@
 package com.narektonakanyan.calendarapplication
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.narektonakanyan.calendarapplication.databinding.ActivityMainBinding
 import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
@@ -25,5 +26,10 @@ class MainActivity : AppCompatActivity() {
                 .selectedEnd(Calendar.getInstance().apply { set(Calendar.YEAR, get(Calendar.YEAR)) }.apply { timeInMillis -= 5 * 86400000L })
                 .build())
         }
+    }
+
+    fun onClick(view: View) {
+        val a = _binding.calendarView.getSelectedDate()
+        print(a)
     }
 }
