@@ -88,7 +88,7 @@ internal class CalendarAdapter : BaseMultiTypeListAdapter<CalendarModel, ViewBin
     }
 
     private fun convertDateToString(date: Date, datePattern: String): String {
-        val sdf = SimpleDateFormat(datePattern, Locale("en"))
+        val sdf = SimpleDateFormat(datePattern, Locale.getDefault())
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         return sdf.format(date)
     }
