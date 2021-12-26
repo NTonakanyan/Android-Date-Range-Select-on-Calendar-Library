@@ -1,7 +1,5 @@
 # Date-Range-Select-on-Calendar-Android
 
-[![](https://jitpack.io/v/NTonakanyan/Android-Date-Range-Select-on-Calendar-Library.svg)](https://jitpack.io/#NTonakanyan/Android-Date-Range-Select-on-Calendar-Library)
-
 How to implement dependecy
 
 1. add your xml 
@@ -23,11 +21,11 @@ How to implement dependecy
 ```gradle
 allprojects {
     repositories {
-	maven { url 'https://jitpack.io' }
+    	maven { url = "https://maven.pkg.github.com/NTonakanyan/Android-Date-Range-Select-on-Calendar-Library" }
     }
 }
 	
 dependencies {
-	implementation 'com.github.NTonakanyan:Android-Date-Range-Select-on-Calendar-Library:Tag'
+	implementation 'com.github.NTonakanyan:android-date-range-select-on-calendar-library:1.0.0'
 }
 ```
