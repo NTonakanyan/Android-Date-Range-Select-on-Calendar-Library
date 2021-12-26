@@ -43,7 +43,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    implementation project(path: ':CalendarLibrary')
+    implementation 'com.github.NTonakanyan:android-date-range-select-on-calendar-library:1.0.0'
+//    implementation project(path: ':CalendarLibrary')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
