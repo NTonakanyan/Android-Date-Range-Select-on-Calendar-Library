@@ -9,4 +9,5 @@ data class ColorModel(
     val selectedMiddleTextBackground: Int = R.color.screamin_green_30,
     val selectedEndTextBackground: Int = R.drawable.background_end_day,
     val singleTextBackground: Int = R.drawable.background_day,
+    val singleTextColor: Int = R.color.orange,
 )

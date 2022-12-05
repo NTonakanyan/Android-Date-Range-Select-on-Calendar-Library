@@ -51,7 +51,7 @@ internal class CalendarAdapter(private val _colorModel:ColorModel) : BaseMultiTy
                         SelectedDayType.SINGLE -> {
                             background.background = ContextCompat.getDrawable(holderContext, _colorModel.singleTextBackground)
                             day.setBackgroundColor(ContextCompat.getColor(holderContext, android.R.color.transparent))
-                            day.setTextColor(ContextCompat.getColor(holderContext, R.color.orange))
+                            day.setTextColor(ContextCompat.getColor(holderContext, _colorModel.singleTextColor))
                         }
                         else -> {
                             background.background = ContextCompat.getDrawable(holderContext, android.R.color.transparent)
