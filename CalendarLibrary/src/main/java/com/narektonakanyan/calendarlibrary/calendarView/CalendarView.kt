@@ -9,6 +9,7 @@ import com.narektonakanyan.calendarlibrary.adapters.CalendarAdapter
 import com.narektonakanyan.calendarlibrary.databinding.LayoutCalendarBinding
 import com.narektonakanyan.calendarlibrary.enums.CalendarType
 import com.narektonakanyan.calendarlibrary.models.CalendarModel
+import com.narektonakanyan.calendarlibrary.models.ColorModel
 import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
 import com.narektonakanyan.calendarlibrary.utils.getGeneratedData
 import com.narektonakanyan.calendarlibrary.utils.getSelectedDays
@@ -18,7 +19,6 @@ import com.narektonakanyan.calendarlibrary.utils.selectSingle
 class CalendarView : FrameLayout {
 
     private val _binding by lazy { LayoutCalendarBinding.inflate(LayoutInflater.from(context), this, true) }
-    private val _adapter by lazy { CalendarAdapter() }
     private val _list = mutableListOf<CalendarModel>()
 
     constructor(context: Context) : super(context) {
@@ -45,15 +45,16 @@ class CalendarView : FrameLayout {
                     }
                 }
             }
-            recyclerView.adapter = _adapter
             recyclerView.layoutManager = gridLayoutManager
         }
     }
 
-    private fun submitList(list: List<CalendarModel>) {
+    private fun submitList(list: List<CalendarModel>, colorModel: ColorModel?) {
+        val adapter = CalendarAdapter(colorModel ?: ColorModel())
+        _binding.recyclerView.adapter = adapter
         _list.clear()
         _list.addAll(list)
-        _adapter.submitList(list)
+        adapter.submitList(list)
     }
 
     fun setupData(builder: SetupCalendarBuilder) {
@@ -64,7 +65,7 @@ class CalendarView : FrameLayout {
             builder.selectedEnd != null -> selectSingle(builder.selectedEnd)
             else -> null
         }
-        submitList(list)
+        submitList(list, builder.colorModel)
         _binding.recyclerView.layoutManager?.scrollToPosition(index ?: list.size.minus(1))
     }
 

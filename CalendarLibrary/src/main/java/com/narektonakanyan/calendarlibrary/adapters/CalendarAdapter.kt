@@ -11,12 +11,13 @@ import com.narektonakanyan.calendarlibrary.databinding.AdapterCalendarMouthItemB
 import com.narektonakanyan.calendarlibrary.enums.CalendarType
 import com.narektonakanyan.calendarlibrary.enums.SelectedDayType
 import com.narektonakanyan.calendarlibrary.models.CalendarModel
+import com.narektonakanyan.calendarlibrary.models.ColorModel
 import com.narektonakanyan.calendarlibrary.utils.getDiffCallback
 import com.narektonakanyan.calendarlibrary.utils.selectItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class CalendarAdapter : BaseMultiTypeListAdapter<CalendarModel, ViewBinding>(getDiffCallback()) {
+internal class CalendarAdapter(private val _colorModel:ColorModel) : BaseMultiTypeListAdapter<CalendarModel, ViewBinding>(getDiffCallback()) {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): Map<Int, ViewBinding> {
         return mapOf(CalendarType.DAY.ordinal to AdapterCalendarDayItemBinding.inflate(inflater, parent, attachToParent),
@@ -34,21 +35,21 @@ internal class CalendarAdapter : BaseMultiTypeListAdapter<CalendarModel, ViewBin
                     when (item.selectedDayType) {
                         SelectedDayType.START -> {
                             background.background = ContextCompat.getDrawable(holderContext, android.R.color.transparent)
-                            day.background = ContextCompat.getDrawable(holderContext, R.drawable.background_start_day)
-                            day.setTextColor(ContextCompat.getColor(holderContext, R.color.orange))
+                            day.background = ContextCompat.getDrawable(holderContext, _colorModel.selectedStartTextBackground)
+                            day.setTextColor(ContextCompat.getColor(holderContext, _colorModel.selectedTextColor))
                         }
                         SelectedDayType.END -> {
                             background.background = ContextCompat.getDrawable(holderContext, android.R.color.transparent)
-                            day.background = ContextCompat.getDrawable(holderContext, R.drawable.background_end_day)
-                            day.setTextColor(ContextCompat.getColor(holderContext, R.color.orange))
+                            day.background = ContextCompat.getDrawable(holderContext,_colorModel.selectedEndTextBackground)
+                            day.setTextColor(ContextCompat.getColor(holderContext, _colorModel.selectedTextColor))
                         }
                         SelectedDayType.MIDDLE -> {
                             background.background = ContextCompat.getDrawable(holderContext, android.R.color.transparent)
-                            day.setBackgroundColor(ContextCompat.getColor(holderContext, R.color.screamin_green_30))
-                            day.setTextColor(ContextCompat.getColor(holderContext, R.color.white))
+                            day.setBackgroundColor(ContextCompat.getColor(holderContext, _colorModel.selectedMiddleTextBackground))
+                            day.setTextColor(ContextCompat.getColor(holderContext, _colorModel.selectedMiddleTextColor))
                         }
                         SelectedDayType.SINGLE -> {
-                            background.background = ContextCompat.getDrawable(holderContext, R.drawable.background_day)
+                            background.background = ContextCompat.getDrawable(holderContext, _colorModel.singleTextBackground)
                             day.setBackgroundColor(ContextCompat.getColor(holderContext, android.R.color.transparent))
                             day.setTextColor(ContextCompat.getColor(holderContext, R.color.orange))
                         }
