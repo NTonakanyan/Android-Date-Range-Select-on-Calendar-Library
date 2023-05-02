@@ -88,11 +88,12 @@ internal fun selectItem(model: CalendarModel, callback: (Int, Int) -> Unit) {
             val firstSelectedIndex = list.indexOfFirst { it.selectedDayType != null }
             val lastSelectedIndex = list.indexOfLast { it.selectedDayType != null }
             for (i in firstSelectedIndex..lastSelectedIndex) {
-                when (i) {
-                    firstSelectedIndex -> list[i].selectedDayType = SelectedDayType.START
-                    lastSelectedIndex -> list[i].selectedDayType = SelectedDayType.END
-                    else -> list[i].selectedDayType = SelectedDayType.MIDDLE
-                }
+                if (list[i].type == CalendarType.DAY)
+                    when (i) {
+                        firstSelectedIndex -> list[i].selectedDayType = SelectedDayType.START
+                        lastSelectedIndex -> list[i].selectedDayType = SelectedDayType.END
+                        else -> list[i].selectedDayType = SelectedDayType.MIDDLE
+                    }
             }
             callback.invoke(firstSelectedIndex, lastSelectedIndex)
         }

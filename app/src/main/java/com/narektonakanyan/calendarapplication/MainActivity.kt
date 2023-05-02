@@ -1,12 +1,14 @@
 package com.narektonakanyan.calendarapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.narektonakanyan.calendarapplication.databinding.ActivityMainBinding
 import com.narektonakanyan.calendarlibrary.models.ColorModel
 import com.narektonakanyan.calendarlibrary.models.SetupCalendarBuilder
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         val a = _binding.calendarView.getSelectedDate()
-        print(a)
+        Log.e("RESULT", a.getOrNull(0)?.time.toString() + " " + a.getOrNull(1)?.time.toString())
     }
 }
