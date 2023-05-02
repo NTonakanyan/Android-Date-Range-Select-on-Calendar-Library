@@ -34,6 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         val a = _binding.calendarView.getSelectedDate()
-        Log.e("RESULT", a.getOrNull(0)?.time.toString() + " " + a.getOrNull(1)?.time.toString())
+        Log.e("RESULT", a.firstOrNull()?.time.toString() + " " + a.lastOrNull()?.time.toString())
     }
 }

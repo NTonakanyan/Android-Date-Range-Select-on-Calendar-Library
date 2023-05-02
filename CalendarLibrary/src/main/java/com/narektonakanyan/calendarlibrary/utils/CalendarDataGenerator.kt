@@ -6,7 +6,6 @@ import com.narektonakanyan.calendarlibrary.models.CalendarModel
 import java.util.*
 
 internal val list = mutableListOf<CalendarModel>()
-internal val weekDaysOfName by lazy { getWeekDaysName().map { CalendarModel(CalendarType.DAY_OF_WEEK_NAME, it) } }
 
 internal fun getGeneratedData(start: Calendar, end: Calendar): List<CalendarModel> {
     list.clear()
@@ -52,7 +51,7 @@ internal fun initListBeforeSelectedDateToMouthEndDay(c: Calendar) {
 
 internal fun addMouthNameAndWeekDaysOfName(c: Calendar) {
     list.add(CalendarModel(CalendarType.MOUTH, c))
-    list.addAll(weekDaysOfName)
+    list.addAll(getWeekDaysName().map { CalendarModel(CalendarType.DAY_OF_WEEK_NAME, it) })
 }
 
 internal fun getWeekDaysName(): List<Calendar> {
@@ -88,12 +87,11 @@ internal fun selectItem(model: CalendarModel, callback: (Int, Int) -> Unit) {
             val firstSelectedIndex = list.indexOfFirst { it.selectedDayType != null }
             val lastSelectedIndex = list.indexOfLast { it.selectedDayType != null }
             for (i in firstSelectedIndex..lastSelectedIndex) {
-                if (list[i].type == CalendarType.DAY)
-                    when (i) {
-                        firstSelectedIndex -> list[i].selectedDayType = SelectedDayType.START
-                        lastSelectedIndex -> list[i].selectedDayType = SelectedDayType.END
-                        else -> list[i].selectedDayType = SelectedDayType.MIDDLE
-                    }
+                when (i) {
+                    firstSelectedIndex -> list[i].selectedDayType = SelectedDayType.START
+                    lastSelectedIndex -> list[i].selectedDayType = SelectedDayType.END
+                    else -> list[i].selectedDayType = SelectedDayType.MIDDLE
+                }
             }
             callback.invoke(firstSelectedIndex, lastSelectedIndex)
         }
